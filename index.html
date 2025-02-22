@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WH40K Kill Team - Equipamiento</title>
+</head>
+<body onload="hideWindow()">
+    <h1>WH40K Kill Team - Selector de Equipamiento</h1>
+    <div>
+        <select name="select-team" id="select-team" onchange="renderTeamWindow()">
+            <optgroup label="Imperium" faction-name="imperium" id="select-imperium">
+                <option value="empty">No disponible</option>
+            </optgroup>
+            <optgroup label="Caos" faction-name="chaos" id="select-chaos">
+                <option value="empty">No disponible</option>
+            </optgroup>
+            <optgroup label="Xenos" faction-name="xenos" id="select-xenos">
+                <option value="empty">No disponible</option>
+            </optgroup>
+        </select>
+    </div>
+    <div id="team-window">
+        <h2 id="team-race" race-name="Default">Raza</h2>
+        <p id="team-units">Unidades: <strong id="max-units">6</strong></p>
+        <div id="team-leader">
+            <fieldset>
+                <legend>Líder (Unidad 1)</legend>
+                <label for="unit-leader">Unidad</label>
+                <select name="unit-leader" id="unit-leader">
+                    <option value="None">Ninguno</option>
+                </select>
+                <div name="weapon-leader" id="weapon-leader">
+                    <label for="ranged-leader">Armamento (Largo Alcance)</label>
+                    <select name="ranged-leader" id="ranged-leader">
+                        <option value="None">Ninguno</option>
+                    </select>
+                    <label for="melee-leader">Armamento (Cuerpo a Cuerpo)</label>
+                    <select name="melee-leader" id="melee-leader">
+                        <option value="None">Ninguno</option>
+                    </select>
+                </div>
+                <label for="equip-leader">Equipo</label>
+                <select name="equip-leader" id="equip-leader">
+                    <optgroup label="Equipo Racial" id="race-equip-leader">
+                        <option value="None">Ninguno</option>
+                    </optgroup>
+                    <optgroup label="Equipo Universal" id="univ-equip-leader">
+                        <option value="None">Ninguno</option>
+                    </optgroup>
+                </select>
+            </fieldset>
+        </div>
+        <div id="team-member-2">
+            <fieldset>
+                <label for="unit-member-2">Unidad 2</label>
+                <select name="unit-member-2" id="unit-member-2">
+                    <option value="None">Ninguno</option>
+                </select>
+                <div name="weapon-member-2" id="weapon-member-2">
+                    <label for="ranged-member-2">Armamento (Largo Alcance)</label>
+                    <select name="ranged-member-2" id="ranged-member-2">
+                        <option value="None">Ninguno</option>
+                    </select>
+                    <label for="melee-member-2">Armamento (Cuerpo a Cuerpo)</label>
+                    <select name="melee-member-2" id="melee-member-2">
+                        <option value="None">Ninguno</option>
+                    </select>
+                </div>
+                <label for="equip-member-2">Equipo</label>
+                <select name="equip-member-2" id="equip-member-2">
+                    <optgroup label="Equipo Racial" id="race-equip-member-2">
+                        <option value="None">Ninguno</option>
+                    </optgroup>
+                    <optgroup label="Equipo Universal" id="univ-equip-member-2">
+                        <option value="None">Ninguno</option>
+                    </optgroup>
+                </select>
+            </fieldset>
+        </div>
+        <div id="team-member-3">
+            <fieldset>
+                <label for="unit-member-3">Unidad 3</label>
+                <select name="unit-member-3" id="unit-member-3">
+                    <option value="None">Ninguno</option>
+                </select>
+                <div name="weapon-member-3" id="weapon-member-3">
+                    <label for="ranged-member-3">Armamento (Largo Alcance)</label>
+                    <select name="ranged-member-3" id="ranged-member-3">
+                        <option value="None">Ninguno</option>
+                    </select>
+                    <label for="melee-member-3">Armamento (Cuerpo a Cuerpo)</label>
+                    <select name="melee-member-3" id="melee-member-3">
+                        <option value="None">Ninguno</option>
+                    </select>
+                </div>
+                <label for="equip-member-3">Equipo</label>
+                <select name="equip-member-3" id="equip-member-3">
+                    <optgroup label="Equipo Racial" id="race-equip-member-3">
+                        <option value="None">Ninguno</option>
+                    </optgroup>
+                    <optgroup label="Equipo Universal" id="univ-equip-member-3">
+                        <option value="None">Ninguno</option>
+                    </optgroup>
+                </select>
+            </fieldset>
+        </div>
+        <div id="team-member-4">
+            <fieldset>
+                <label for="unit-member-4">Unidad 4</label>
+                <select name="unit-member-4" id="unit-member-4">
+                    <option value="None">Ninguno</option>
+                </select>
+                <div name="weapon-member-4" id="weapon-member-4">
+                    <label for="ranged-member-4">Armamento (Largo Alcance)</label>
+                    <select name="ranged-member-4" id="ranged-member-4">
+                        <option value="None">Ninguno</option>
+                    </select>
+                    <label for="melee-member-4">Armamento (Cuerpo a Cuerpo)</label>
+                    <select name="melee-member-4" id="melee-member-4">
+                        <option value="None">Ninguno</option>
+                    </select>
+                </div>
+                <label for="equip-member-4">Equipo</label>
+                <select name="equip-member-4" id="equip-member-4">
+                    <optgroup label="Equipo Racial" id="race-equip-member-4">
+                        <option value="None">Ninguno</option>
+                    </optgroup>
+                    <optgroup label="Equipo Universal" id="univ-equip-member-4">
+                        <option value="None">Ninguno</option>
+                    </optgroup>
+                </select>
+            </fieldset>
+        </div>
+        <div id="team-member-5">
+            <fieldset>
+                <label for="unit-member-5">Unidad 5</label>
+                <select name="unit-member-5" id="unit-member-5">
+                    <option value="None">Ninguno</option>
+                </select>
+                <div name="weapon-member-5" id="weapon-member-5">
+                    <label for="ranged-member-5">Armamento (Largo Alcance)</label>
+                    <select name="ranged-member-5" id="ranged-member-5">
+                        <option value="None">Ninguno</option>
+                    </select>
+                    <label for="melee-member-5">Armamento (Cuerpo a Cuerpo)</label>
+                    <select name="melee-member-5" id="melee-member-5">
+                        <option value="None">Ninguno</option>
+                    </select>
+                </div>
+                <label for="equip-member-5">Equipo</label>
+                <select name="equip-member-5" id="equip-member-5">
+                    <optgroup label="Equipo Racial" id="race-equip-member-5">
+                        <option value="None">Ninguno</option>
+                    </optgroup>
+                    <optgroup label="Equipo Universal" id="univ-equip-member-5">
+                        <option value="None">Ninguno</option>
+                    </optgroup>
+                </select>
+            </fieldset>
+        </div>
+        <div id="team-member-6">
+            <fieldset>
+                <label for="unit-member-6">Unidad 6</label>
+                <select name="unit-member-6" id="unit-member-6">
+                    <option value="None">Ninguno</option>
+                </select>
+                <div name="weapon-member-6" id="weapon-member-6">
+                    <label for="ranged-member-6">Armamento (Largo Alcance)</label>
+                    <select name="ranged-member-6" id="ranged-member-6">
+                        <option value="None">Ninguno</option>
+                    </select>
+                    <label for="melee-member-6">Armamento (Cuerpo a Cuerpo)</label>
+                    <select name="melee-member-6" id="melee-member-6">
+                        <option value="None">Ninguno</option>
+                    </select>
+                </div>
+                <label for="equip-member-6">Equipo</label>
+                <select name="equip-member-6" id="equip-member-6">
+                    <optgroup label="Equipo Racial" id="race-equip-member-6">
+                        <option value="None">Ninguno</option>
+                    </optgroup>
+                    <optgroup label="Equipo Universal" id="univ-equip-member-6">
+                        <option value="None">Ninguno</option>
+                    </optgroup>
+                </select>
+            </fieldset>
+        </div>
+    </div>
+    <script src="js/init.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
