@@ -59,7 +59,6 @@ function renderUnitOptions(unitClass) {
     const race = document.getElementById('team-race').getAttribute('race-name');
     const unitID = document.getElementById(`unit-${unitClass}`).value;
     renderWeaponSelect(race, unitID, unitClass);
-    renderEquipmentSelect(race, unitID, unitClass)
 }
 
 function getLeaderUnits(units, unitType) {
