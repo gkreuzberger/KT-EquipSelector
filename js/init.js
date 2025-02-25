@@ -700,7 +700,7 @@ const teams_xenos = {
         name_es: "Orkomandoz",
         name_en: "Kommando",
         team_units: 10,
-        team_leader: "Boss",
+        leader_unit: "Boss",
         units: {
             km_nob: {
                 name_es: "Noble Komando",
@@ -915,7 +915,7 @@ const teams_xenos = {
         name_es: "Bailarines del Vacío",
         name_en: "Void Dancer Troupe",
         team_units: 8,
-        team_leader: "Lead",
+        leader_unit: "Lead",
         units: {
             vd_lead: {
                 name_es: "Primadonna",

@@ -11,21 +11,6 @@ function getRace() {
     return selection
 }
 
-function renderUniversalEquipment() {
-    const univEquipList = JSON.parse(localStorage.getItem('universal_equip'));
-    const univEquipSelect = document.getElementById('univ-equip-leader');
-    for(const indexUE in univEquipList) {
-        const equipOption = document.createElement('option');
-        equipOption.setAttribute('value', `${indexUE}`);
-        equipOption.innerHTML = `${univEquipList[indexUE].name_es}`;
-        univEquipSelect.appendChild(equipOption.cloneNode(true));
-        for(let i = 2; i <= 6; i++) {
-            const nextSelect = document.getElementById(`univ-equip-member-${i}`);
-            nextSelect.appendChild(equipOption.cloneNode(true))
-        }
-    }
-}
-
 function generateTeamSelection() {
     const factionNames = JSON.parse(localStorage.getItem('faction_names'));
     for(index in factionNames) {
@@ -40,7 +25,6 @@ function generateTeamSelection() {
             factionLabel.appendChild(factionOption);
         }
     }
-    renderUniversalEquipment();
 }
 
 function clearOptions(selectID) {
@@ -71,21 +55,6 @@ function renderWeaponSelect(race, unitID, unitClass) {
     }
 }
 
-function renderEquipmentSelect(race, unitID, unitClass) {
-    const raceEquipList = team_races[race].units[unitID].equipables;
-    const raceEquipSelect = document.getElementById(`race-equip-${unitClass}`);
-    clearOptions(`race-equip-${unitClass}`);
-    for(const indexE in raceEquipList) {
-        let equipID = raceEquipList[indexE];
-        if(document.querySelector(`select#race-equip-${unitClass} option[value="${equipID}"]`) == null) {
-            const equipOption = document.createElement('option');
-            equipOption.setAttribute('value', `${equipID}`);
-            equipOption.innerHTML = `${team_races[race].equipment[equipID].name_es}`;
-            raceEquipSelect.appendChild(equipOption);
-        } 
-    }
-}
-
 function renderUnitOptions(unitClass) {
     const race = document.getElementById('team-race').getAttribute('race-name');
     const unitID = document.getElementById(`unit-${unitClass}`).value;
@@ -112,11 +81,12 @@ function renderMemberSelection(race, memberIndex) {
         unitList = race.units;
         unitID = `member-${memberIndex}`
     };
-    clearOptions(`unit-${unitID}`);
+    if(document.getElementById(`unit-${unitID}`) != null) {
+        clearOptions(`unit-${unitID}`);
+    };
     for(const indexU in unitList) {
         const unit = unitList[indexU];
         const unitSelect = document.getElementById(`unit-${unitID}`);
-
         const unitOption = document.createElement('option');
         unitSelect.setAttribute('onchange', `renderUnitOptions("${unitID}")`);
         unitOption.setAttribute('value', `${indexU}`);
@@ -130,33 +100,41 @@ function renderMemberSelection(race, memberIndex) {
     localStorage.setItem(event.target.id, event.target.value);
 } */
 
-function generateMembers(raceUnits) {
+/* function generateMembers(raceUnits) {
     const teamDiv = document.getElementById('team-window');
+    let unitID;
     for(let i = 7; i <= raceUnits; i++) {
+        unitID = i;
         const memberDiv = document.createElement('div');
-        memberDiv.setAttribute('id', `team-member-${i}`);
+        
+        if(i == 1) {
+            unitID = 'leader'
+        } else {
+            unitID = `member-${i}`
+        };
+        memberDiv.setAttribute('id', `team-${unitID}`);
         memberDiv.innerHTML = `
         <fieldset>
-            <label for="unit-member-${i}">Unidad ${i}</label>
-            <select name="unit-member-${i}" id="unit-member-${i}">
+            <label for="unit-${unitID}">Unidad ${i}</label>
+            <select name="unit-${unitID}" id="unit-${unitID}">
                 <option value="None">Ninguno</option>
             </select>
-            <div name="weapon-member-${i}" id="weapon-member-${i}">
-                <label for="ranged-member-${i}">Armamento (Largo Alcance)</label>
-                <select name="ranged-member-${i}" id="ranged-member-${i}">
+            <div name="weapon-${unitID}" id="weapon-${unitID}">
+                <label for="ranged-${unitID}">Armamento (Largo Alcance)</label>
+                <select name="ranged-${unitID}" id="ranged-${unitID}">
                     <option value="None">Ninguno</option>
                 </select>
-                <label for="melee-member-${i}">Armamento (Cuerpo a Cuerpo)</label>
-                <select name="melee-member-${i}" id="melee-member-${i}">
+                <label for="melee-${unitID}">Armamento (Cuerpo a Cuerpo)</label>
+                <select name="melee-${unitID}" id="melee-${unitID}">
                     <option value="None">Ninguno</option>
                 </select>
             </div>
-            <label for="equip-member-${i}">Equipo</label>
-            <select name="equip-member-${i}" id="equip-member-${i}">
-                <optgroup label="Equipo Racial" id="race-equip-member-${i}">
+            <label for="equip-${unitID}">Equipo</label>
+            <select name="equip-${unitID}" id="equip-${unitID}">
+                <optgroup label="Equipo Racial" id="race-equip-${unitID}">
                     <option value="None">Ninguno</option>
                 </optgroup>
-                <optgroup label="Equipo Universal" id="univ-equip-member-${i}">
+                <optgroup label="Equipo Universal" id="univ-equip-${unitID}">
                     <option value="None">Ninguno</option>
                 </optgroup>
             </select>
@@ -164,17 +142,126 @@ function generateMembers(raceUnits) {
         `;
         teamDiv.appendChild(memberDiv)
     }
+} */
+
+function generateMembers(raceUnits) {
+    const teamDiv = document.getElementById('team-window');
+    let unitID, unitTitle;
+    let memberDiv = document.getElementById('team-members');
+    if(memberDiv == null) {
+        memberDiv = document.createElement('div');
+        memberDiv.setAttribute('id', 'team-members');
+        teamDiv.appendChild(memberDiv)
+    } else {
+        memberDiv.innerHTML = ''
+    };
+    for(let i = 1; i <= raceUnits; i++) {
+        unitID = i;
+        const unitDiv = document.createElement('div');
+        
+        if(i == 1) {
+            unitID = 'leader';
+            unitTitle = ' (Líder)'
+        } else {
+            unitID = `member-${i}`;
+            unitTitle = ''
+        };
+        unitDiv.setAttribute('id', `team-${unitID}`);
+        unitDiv.innerHTML = `
+        <fieldset>
+            <label for="unit-${unitID}">Unidad ${i}${unitTitle}</label>
+            <select name="unit-${unitID}" id="unit-${unitID}">
+                <option value="None">Ninguno</option>
+            </select>
+            <br>
+            <label for="weapon-${unitID}">Armamento</label>
+            <div name="weapon-${unitID}" id="weapon-${unitID}">
+                <label for="ranged-${unitID}">Largo Alcance</label>
+                <select name="ranged-${unitID}" id="ranged-${unitID}">
+                    <option value="None">Ninguno</option>
+                </select>
+                <label for="melee-${unitID}">Cuerpo a Cuerpo</label>
+                <select name="melee-${unitID}" id="melee-${unitID}">
+                    <option value="None">Ninguno</option>
+                </select>
+            </div>
+        </fieldset>
+        `;
+        memberDiv.appendChild(unitDiv)
+    }
 }
 
-function removeUnusedMembers(raceUnits) {
-    const unusedMembers = parseInt(document.getElementById('max-units').innerHTML);
-    if(unusedMembers > 6) {
-        for(let i = unusedMembers; i > raceUnits; i--) {
+function renderUniversalEquipment() {
+    const univEquipList = JSON.parse(localStorage.getItem('universal_equip'));
+    let univEquipSelect = document.getElementById(`univ-equip-1`)
+    for(const indexUE in univEquipList) {
+        const equipOption = document.createElement('option');
+        equipOption.setAttribute('value', `${indexUE}`);
+        equipOption.innerHTML = `${univEquipList[indexUE].name_es}`;
+        for(let i = 1; i<= 4; i++) {
+            univEquipSelect.appendChild(equipOption.cloneNode(true));
+            univEquipSelect = document.getElementById(`univ-equip-${i}`)
+        }
+    }
+}
+
+function renderEquipmentSelect(race) {
+    const raceEquipList = race.equipment;
+    let equipID = 1;
+    for(let i = 1; i <= 4; i++) {
+        clearOptions(`race-equip-${i}`)
+    }
+    for(elem in raceEquipList) {
+        const equipOption = document.createElement('option');
+        equipOption.setAttribute('value', `${elem}`);
+        equipOption.innerHTML = `${race.equipment[elem].name_es}`;
+        for(let i = 1; i <= 4; i++) {
+            const equipSelect = document.getElementById(`race-equip-${i}`);
+            equipSelect.appendChild(equipOption.cloneNode(true));
+        }
+    }
+}
+
+function generateEquipmentWindow(race) {
+    const teamDiv = document.getElementById('team-window');
+    let equipDiv = document.createElement('div');
+    equipDiv.setAttribute('id', 'team-equip');
+    equipDiv.innerHTML = `
+        <fieldset>
+            <legend>Equipo</Legend>
+        </fieldset>
+    `;
+    teamDiv.appendChild(equipDiv);
+    equipDiv = document.querySelector('div#team-equip fieldset');
+    for(let i = 1; i <= 4; i++) {
+        const equipSelect = `
+            <label for="equip-${i}">Equipo</label>
+            <select name="equip-${i}" id="equip-${i}">
+                <optgroup label="Equipo Racial" id="race-equip-${i}">
+                    <option value="None">Ninguno</option>
+                </optgroup>
+                <optgroup label="Equipo Universal" id="univ-equip-${i}">
+                    <option value="None">Ninguno</option>
+                </optgroup>
+            </select>
+        `;
+        equipDiv.insertAdjacentHTML('beforeend', equipSelect);
+    };
+    renderUniversalEquipment();
+    renderEquipmentSelect(race)
+}
+
+/* function removeUnusedMembers(raceUnits) {
+    const usedMembers = raceUnits;
+    if(usedMembers > 6) {
+        for(let i = usedMembers; i > 6; i--) {
             let targetedMember = document.getElementById(`team-member-${i}`);
             targetedMember.parentNode.removeChild(targetedMember)
         }
     }
-}
+} */
+
+function checkSelectedLeader() {};
 
 function renderTeamWindow() {
     let selectedRace, selectedFaction;
@@ -186,13 +273,16 @@ function renderTeamWindow() {
     let teamTitle = document.getElementById('team-race');
     teamTitle.setAttribute('race-name', selectedRace);
     teamTitle.innerText = `${raceProperties.name_es}`;
-
-    if(raceProperties.team_units > 6) {
-        generateMembers(raceMaxUnits)
-    } else {
-        removeUnusedMembers(raceMaxUnits)
-    };
     document.getElementById('max-units').innerHTML = `${raceMaxUnits}`;
+    if(document.getElementById('team-equip') == null) {
+        generateEquipmentWindow(raceProperties)
+    } else {
+        for(let i = 1; i <= 4; i++) {
+            clearOptions(`race-equip-${i}`)
+        };
+        renderEquipmentSelect(raceProperties)
+    };
+    generateMembers(raceMaxUnits);
     for(let i = 1; i <= raceMaxUnits; i++) {
         renderMemberSelection(raceProperties, i)
     }
